@@ -3,12 +3,14 @@ package wrx.xing.data_structures.sort;
 import java.util.Arrays;
 
 /**
+ * 2
  * 请填写类的描述
  * 选择排序
+ * 时间复杂度O(n^2)
  * @author wangruxing
  * @date 2019-10-03 14:52
  */
-public class SelectionSort {
+public class SelectionSortDemo {
 	public static void main(String[] args) {
 		int[] arr = {3,9,-1,10,-2};
 		selectionSort(arr);

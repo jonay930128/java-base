@@ -3,13 +3,14 @@ package wrx.xing.data_structures.sort;
 import java.util.Arrays;
 
 /**
+ * 1
  * 请填写类的描述
  * 冒泡排序
  * 时间复杂度：O(n^2)
  * @author wangruxing
  * @date 2019-10-03 14:13
  */
-public class BubbleSort {
+public class BubbleSortDemo {
 
 	public static void main(String[] args) {
 //		int[] arr = {3,9,-1,10,-2};
