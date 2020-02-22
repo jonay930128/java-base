@@ -52,4 +52,12 @@ public class NioTest {
 		outputStream.close();
 	}
 
+
+	@Test
+	public void test3() {
+		DecimalTest d1 = new DecimalTest();
+		DecimalTest d2 = new DecimalTest();
+		System.out.println(d1.df == d2.df);
+	}
+
 }

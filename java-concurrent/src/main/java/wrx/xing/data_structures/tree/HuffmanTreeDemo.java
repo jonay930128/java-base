@@ -70,7 +70,7 @@ class Node implements Comparable<Node> {
 
 	@Override
 	public String toString() {
-		return "Node{" +
+		return "ListNode{" +
 				"value=" + value +
 				'}';
 	}

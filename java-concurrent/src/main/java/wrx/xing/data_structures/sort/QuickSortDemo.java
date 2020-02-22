@@ -10,13 +10,24 @@ import java.util.Arrays;
  * @date 2019-10-04 10:04
  */
 public class QuickSortDemo {
+	// 设定基准值（pivot）
+//	int index = left + 1;
+//		for (int i = index; i <= right; i++) {
+//		if (arr[i] < arr[left]) {
+//			swap(arr, i, index);
+//			index++;
+//		}
+//	}
+//	swap(arr, left, index - 1);
+//		return index - 1;
 	public static void main(String[] args) {
 //		int[] arr = {3,9,-1,10,-2};
-//		int[] arr = {3,3,3,3,3,3};
-		int[] arr = new int[8];
-		for (int i = 0; i < 8; i++) {
-			arr[i] = (int)(Math.random() * 80);
-		}
+		int[] arr = {42, 40, 67, 71, 49, 8, 2, 75};
+//		int[] arr = new int[8];
+//		for (int i = 0; i < 8; i++) {
+//			arr[i] = (int)(Math.random() * 80);
+//		}
+		System.out.println(Arrays.toString(arr));
 		long start = System.currentTimeMillis();
 		quickSort(arr,0,arr.length - 1);
 		System.out.println(Arrays.toString(arr));
@@ -32,7 +43,7 @@ public class QuickSortDemo {
 	 * 右边重复上面步骤递归
 	 * @param arr 数组
 	 */
-	private static void quickSort(int[] arr,int left,int right) {
+	private static void quickSort2(int[] arr,int left,int right) {
 		// 记录中轴位置元素，以他为基准
 		int pivot = arr[(left + right) / 2];
 		// 左边
@@ -90,5 +101,52 @@ public class QuickSortDemo {
 		if (l < right) {
 			quickSort(arr,l,right);
 		}
+	}
+
+
+	private static int[] quickSort(int[] arr, int left, int right) {
+		if (left < right) {
+			int partitionIndex = partition(arr, left, right);
+			quickSort(arr, left, partitionIndex - 1);
+			quickSort(arr, partitionIndex + 1, right);
+		}
+		return arr;
+	}
+	private static int partition(int[] arr, int left, int right) {
+		int index = left + 1;
+		for (int i = index; i <= right; i++) {
+			if (arr[left] > arr[i]) {
+				swap(arr,index,i);
+				index++;
+			}
+		}
+		swap(arr,left,index - 1);
+		return index - 1;
+	}
+	private static void swap(int[] arr, int i, int j) {
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
+
+	private int[] sort(int[] arr,int left,int right) {
+		if (left < right) {
+			int partitionIndex = findPartition(arr,left,right);
+			sort(arr,left,partitionIndex - 1);
+			sort(arr,partitionIndex + 1,right);
+		}
+		return arr;
+	}
+
+	private int findPartition(int[] arr, int left, int right) {
+		int index = left + 1;
+		for (int i = index; i <= right; i++) {
+			if (arr[left] > arr[i]) {
+				swap(arr,index,i);
+				index++;
+			}
+		}
+		swap(arr,left,index - 1);
+		return index - 1;
 	}
 }

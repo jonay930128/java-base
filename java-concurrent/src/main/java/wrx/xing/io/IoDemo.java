@@ -2,6 +2,7 @@ package wrx.xing.io;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 请填写类的描述
@@ -10,37 +11,66 @@ import java.util.*;
  * @date 2019-04-09 11:31
  */
 public class IoDemo {
-	public static void main(String[] args) throws Exception{
-		/* 读入TXT文件 */
-		String pathname = "E:\\otherGit\\bannedwords\\pub_sms_banned_words.txt"; // 绝对路径或相对路径都可以，这里是绝对路径，写入文件时演示相对路径
-		File filename = new File(pathname); // 要读取以上路径的input。txt文件
-		InputStreamReader reader = new InputStreamReader(
-				new FileInputStream(filename)); // 建立一个输入流对象reader
-		BufferedReader br = new BufferedReader(reader); // 建立一个对象，它把文件内容转成计算机能读懂的语言
+	public static void main(String[] args) throws Exception {
+		// 这个集合里有1000个
+		List<String> paths = Arrays.asList("1.txt","2.txt");
+		List<List<String>> collect = paths.parallelStream().map(item -> {
+			try {
+				return top10(item);
+			} catch (Exception e) {
+				return new ArrayList<String>();
+			}
+		}).collect(Collectors.toList());
+
+
+
+	}
+
+	public static List<String> top10(String pathName)throws Exception  {
+		InputStreamReader reader = new InputStreamReader(new FileInputStream(pathName));
+		BufferedReader br = new BufferedReader(reader);
 		String line = "";
 		line = br.readLine();
-		Set<String> set = new LinkedHashSet<>();
+		Map<String, Integer> map = new HashMap<>();
 		while (line != null) {
-			line = br.readLine(); // 一次读入一行数据
+			line = br.readLine();
 			if (line != null && !"".equalsIgnoreCase(line) && !"null".equalsIgnoreCase(line)) {
-				line = new String(Base64.getDecoder().decode(line)).trim();
-				set.add(line);
+				line = line.trim();
+				if(null == line || "".equalsIgnoreCase(line) || "null".equalsIgnoreCase(line)) {
+					continue;
+				}
+				String[] split = line.split(",");
+				if (split.length != 2) {
+					continue;
+				}
+				int num;
+				try {
+					num = Integer.parseInt(split[1]);
+				} catch (NumberFormatException e) {
+					continue;
+				}
+				Integer count = map.get(split[0]);
+				if (null == count) {
+					map.put(split[0], num);
+				} else {
+					map.put(split[0], count + num);
+				}
 			}
 		}
 		reader.close();
 
-		/* 写入Txt文件 */
-		File writename = new File("E:\\otherGit\\bannedwords\\pub_sms_banned_words2.txt"); // 相对路径，如果没有则要建立一个新的output。txt文件
-		writename.createNewFile(); // 创建新文件
-		BufferedWriter out = new BufferedWriter(new FileWriter(writename));
-		for (String str : set) {
+		List<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
+		Collections.sort(list, (o1, o2) -> o2.getValue() - o1.getValue());
 
-
-			out.write(str + "\r\n"); // \r\n即为换行
-
+		List<String> result = new ArrayList();
+		if(list.isEmpty()) {
+			return result;
+		}else {
+			for (int i = 0; i < 10 && i < list.size(); i++) {
+				result.add(list.get(i).getKey());
+			}
+			return result;
 		}
 
-		out.flush(); // 把缓存区内容压入文件
-		out.close(); // 最后记得关闭文件
 	}
 }

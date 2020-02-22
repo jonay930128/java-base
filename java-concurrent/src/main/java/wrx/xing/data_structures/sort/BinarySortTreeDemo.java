@@ -62,7 +62,7 @@ class Node {
 
 	@Override
 	public String toString() {
-		return "Node{" +
+		return "ListNode{" +
 				"value=" + value +
 				'}';
 	}

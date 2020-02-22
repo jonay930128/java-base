@@ -15,6 +15,14 @@ public class DeadLockDemo {
 		Integer lock2 = 2;
 		new Thread(new HoldLockThread(lock1,lock2),"aaaa").start();
 		new Thread(new HoldLockThread(lock2,lock1),"bbbb").start();
+
+		/*long time = System.currentTimeMillis()/1000;
+		System.out.println(time);
+
+		String plainText = "ip"+"@"+time;
+		plainText = plainText.substring(0, (plainText.length()-3))+"000";
+		System.out.println(plainText);*/
+
 	}
 
 }

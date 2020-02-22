@@ -24,7 +24,6 @@ public class InsertValSearchDemo {
 	 * @return 找到返回对应的索引，没找到返回-1
 	 */
 	private static int insertValSearch(int[] arr, int findVal, int left, int right) {
-		System.out.println("hello~");
 		if (left > right || findVal < arr[0] || findVal > arr[arr.length - 1]) {
 			return -1;
 		}

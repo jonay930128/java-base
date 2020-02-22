@@ -18,14 +18,14 @@ public class SingleLinkedListDemo {
 		SingleNode node4 = new SingleNode(4, "公孙胜", "入云龙");
 
 		list.addOrder(node1);
-		list.addOrder(node2);
 		list.addOrder(node3);
 		list.addOrder(node4);
+		list.addOrder(node2);
 		list.show();
 
-		System.out.println("反转后：");
-		list.reverse3();
-		list.show();
+//		System.out.println("反转后：");
+//		list.reverse();
+//		list.show();
 
 //		list.del(node1);
 //		System.out.println("删除节点：");
@@ -78,7 +78,6 @@ class SingleLinkedList {
 		}
 	}
 
-
 	public void reverse() {
 		// 一个都没有或者只有一个就直接返回，无需反转
 		if (head.next == null || head.next.next == null) {
@@ -87,7 +86,6 @@ class SingleLinkedList {
 		SingleNode newHead = new SingleNode(0, "", "");
 		SingleNode cur = head.next;
 		SingleNode next = null;
-
 		while (cur != null) {
 			// 1: 记录下一个节点
 			next = cur.next;
